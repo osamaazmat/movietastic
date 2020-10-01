@@ -1,0 +1,6 @@
+framework module Pods_Movietastic_MovietasticUITests {
+  umbrella header "Pods-Movietastic-MovietasticUITests-umbrella.h"
+
+  export *
+  module * { export * }
+}

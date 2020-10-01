@@ -1,0 +1,6 @@
+framework module Pods_Movietastic {
+  umbrella header "Pods-Movietastic-umbrella.h"
+
+  export *
+  module * { export * }
+}
