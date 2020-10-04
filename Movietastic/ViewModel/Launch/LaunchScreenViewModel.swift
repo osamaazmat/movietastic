@@ -2,14 +2,45 @@
 //  LaunchScreenViewModel.swift
 //  Movietastic
 //
-//  Created by Cielo on 01/10/2020.
+//  Created by Macbook Pro on 01/10/2020.
 //
 
 import Foundation
 
-class LaunchScreenViewModel {
-    
+protocol LaunchScreenViewModelDelegate {
+    func moviesSynced(withMovies movies: [MovieModel])
 }
 
+class LaunchScreenViewModel: NSObject {
+    var delegate: LaunchScreenViewModelDelegate?
+}
 
-//https://jsonplaceholder.typicode.com/posts
+extension LaunchScreenViewModel {
+    
+    func logUserEndDay() {
+        UserDefaults.standard.setValue(Date().endOfDay, forKey: "userLoginEndDay")
+    }
+    
+    func getMovies() {
+        if let date = UserDefaults.standard.object(forKey: "userLoginEndDay") as? Date {
+            if Date().endOfDay > date {
+                MovieService.sharedInstance.syncMoviesWithServer { (movies) in
+                    self.delegate?.moviesSynced(withMovies: movies)
+                }
+            }
+            else {
+                logUserEndDay()
+                MovieService.sharedInstance.syncMoviesWithServer { (movies) in
+                    self.delegate?.moviesSynced(withMovies: movies)
+                }
+            }
+        }
+        else {
+            logUserEndDay()
+            MovieService.sharedInstance.syncMoviesWithServer { (movies) in
+                self.delegate?.moviesSynced(withMovies: movies)
+            }
+        }
+    }
+    
+}

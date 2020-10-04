@@ -2,7 +2,7 @@
 //  AppDelegate.swift
 //  Movietastic
 //
-//  Created by Cielo on 01/10/2020.
+//  Created by Macbook Pro on 01/10/2020.
 //
 
 import UIKit
@@ -11,7 +11,10 @@ import CoreData
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-
+    lazy var window: UIWindow? = {
+        return UIApplication.shared.windows.first
+    }()
+    static let sharedInstance = UIApplication.shared.delegate as! AppDelegate
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
